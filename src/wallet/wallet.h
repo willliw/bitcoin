@@ -76,8 +76,9 @@ enum WalletFeature
 
     FEATURE_WALLETCRYPT = 40000, // wallet encryption
     FEATURE_COMPRPUBKEY = 60000, // compressed public keys
+    FEATURE_HD          = 70000, // hd keys
 
-    FEATURE_LATEST = 60000
+    FEATURE_LATEST = 70000
 };
 
 
@@ -509,6 +510,9 @@ public:
     MasterKeyMap mapMasterKeys;
     unsigned int nMasterKeyMaxID;
 
+    //! current active hd chain
+    HDChainID activeHDChain;
+
     CWallet()
     {
         SetNull();
@@ -783,6 +787,16 @@ public:
     bool GetBroadcastTransactions() const { return fBroadcastTransactions; }
     /** Set whether this wallet broadcasts transactions. */
     void SetBroadcastTransactions(bool broadcast) { fBroadcastTransactions = broadcast; }
+
+    /** HD functions */
+    //! Adds a master seed the the in-mem map (store it in the db if memonly == false)
+    bool AddMasterSeed(const HDChainID& chainID, const CKeyingMaterial& masterSeed, bool memonly = false);
+    //! Adds a new HD keychain
+    bool AddHDChain(const CHDChain& chain, bool memonly = false);
+    //! Encrypt the HD seeds
+    bool EncryptHDSeeds(CKeyingMaterial& vMasterKeyIn);
+    bool SetActiveHDChainID(const HDChainID& chainID, bool check = true, bool memonly = false);
+    bool GetActiveHDChainID(HDChainID& chainID);
 };
 
 /** A key allocated from the key pool. */

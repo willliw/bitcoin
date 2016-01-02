@@ -604,7 +604,7 @@ ReadKeyValue(CWallet* pwallet, CDataStream& ssKey, CDataStream& ssValue,
             CKeyingMaterial masterSeed;
             ssKey >> masterPubKeyHash;
             ssValue >> masterSeed;
-            pwallet->AddMasterSeed(masterPubKeyHash, masterSeed);
+            pwallet->AddMasterSeed(masterPubKeyHash, masterSeed, true);
         }
         else if (strType == "hdcryptedmasterseed")
         {

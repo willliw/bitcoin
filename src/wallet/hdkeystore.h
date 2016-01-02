@@ -121,13 +121,13 @@ public:
     std::map<CKeyID, CKeyMetadata> mapKeyMetadata;
 
     //!add a master seed with a given pubkeyhash (memory only)
-    virtual bool AddMasterSeed(const HDChainID& chainID, const CKeyingMaterial& masterSeed);
+    bool AddMasterSeed(const HDChainID& chainID, const CKeyingMaterial& masterSeed);
 
     //!add a crypted master seed with a given pubkeyhash (memory only)
     virtual bool AddCryptedMasterSeed(const HDChainID& chainID, const std::vector<unsigned char>& vchCryptedSecret);
 
     //!encrypt existing uncrypted seeds and remove unencrypted data
-    virtual bool EncryptSeeds();
+    virtual bool EncryptSeeds(CKeyingMaterial& vMasterKeyIn);
 
     //!export the master seed from a given chain id (hash of the master pub key)
     virtual bool GetMasterSeed(const HDChainID& chainID, CKeyingMaterial& seedOut) const;
